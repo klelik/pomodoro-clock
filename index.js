@@ -21,20 +21,24 @@ const title = document.getElementById("title");
 reset();
 
 function playSound() {
-  var audio = new Audio('https://freesound.org/data/previews/316/316847_4939433-lq.mp3');
+  var audio = new Audio(
+    "https://freesound.org/data/previews/316/316847_4939433-lq.mp3"
+  );
   audio.play();
 }
 
 function updateUITimer(length) {
-    let floorMin = Math.floor(length / 60);
-    let floorSec = (length % 60);
+  let floorMin = Math.floor(length / 60);
+  let floorSec = length % 60;
 
-  if (floorMin.toString().length === 1) {    /*if(minutes displayed is 1:..) => make it 01: */
+  if (floorMin.toString().length === 1) {
+    /*if(minutes displayed is 1:..) => make it 01: */
     timerMinutes.textContent = "0" + floorMin;
   } else {
     timerMinutes.textContent = floorMin;
   }
-  if (floorSec.toString().length === 1) {    /*if(secs displayed is ..:1) => make it ..:01 */
+  if (floorSec.toString().length === 1) {
+    /*if(secs displayed is ..:1) => make it ..:01 */
     timerSeconds.textContent = "0" + floorSec;
   } else {
     timerSeconds.textContent = floorSec;
@@ -45,10 +49,11 @@ function reset() {
   isSessionMode = true;
   breakSessionLength = FIVE_MINUTES;
   sessionLength = TWENTYFIVE_MINUTES;
-  breakSessionElement.textContent = FIVE_MINUTES / 60;      /*#sessionElement = 25 */
-  sessionElement.textContent = TWENTYFIVE_MINUTES / 60;     /* #breakSessionElement = 5 */
-  clearInterval(sessionTimer);                              /*stop timer after reseting values */
-  timerMinutes.textContent = "25";                           /*#timer min = 25 */
+  breakSessionElement.textContent = FIVE_MINUTES / 60; /*#sessionElement = 25 */
+  sessionElement.textContent =
+    TWENTYFIVE_MINUTES / 60; /* #breakSessionElement = 5 */
+  clearInterval(sessionTimer); /*stop timer after reseting values */
+  timerMinutes.textContent = "25"; /*#timer min = 25 */
   timerSeconds.textContent = "00";
 }
 
@@ -58,8 +63,7 @@ function startBreak() {
   playSound();
   sleep(1000);
 
-
-  title.textContent = "Break" ;
+  title.textContent = "Break";
 
   breakTimer = setInterval(() => {
     breakSessionLength -= 1;
@@ -78,7 +82,8 @@ function startSession() {
   isSessionMode = true;
   title.textContent = "Session";
 
-  sessionTimer = setInterval(() => {    /* Displays new timerMin and timerSec every 1000 sec */
+  sessionTimer = setInterval(() => {
+    /* Displays new timerMin and timerSec every 1000 sec */
     sessionLength -= 1;
     updateUITimer(sessionLength);
 
@@ -100,7 +105,7 @@ playButton.addEventListener("click", () => {
 
 pauseButton.addEventListener("click", () => {
   if (isSessionMode) {
-    clearInterval(sessionTimer);            /*stop timer*/
+    clearInterval(sessionTimer); /*stop timer*/
   }
 });
 
@@ -132,11 +137,10 @@ sessionMinusElement.addEventListener("click", () => {
   }
 });
 
-sessionPlusElement.addEventListener("click", () =>{
-    sessionLength +=60;
-    sessionElement.textContent = Math.floor(sessionLength / 60);
-    if (isSessionMode) {
-      timerMinutes.textContent = Math.floor(sessionLength / 60);
-    }
+sessionPlusElement.addEventListener("click", () => {
+  sessionLength += 60;
+  sessionElement.textContent = Math.floor(sessionLength / 60);
+  if (isSessionMode) {
+    timerMinutes.textContent = Math.floor(sessionLength / 60);
+  }
 });
-
